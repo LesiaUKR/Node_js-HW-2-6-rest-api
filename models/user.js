@@ -17,12 +17,14 @@ const userSchema = new Schema({
       required: [true, 'Email is required'],
    },
    password: {
-    type: String,
+      type: String,
       minlength: 6,
       required: [true, 'Set password for user'],
-}
-
-
+   },
+    token: {
+       type: String,
+       default:""
+      }
 }, { versionKey: false, timestamps: true });
 
 userSchema.post("save", handleMongooseError);
