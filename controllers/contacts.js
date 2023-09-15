@@ -3,7 +3,8 @@ const { ctrlWrapper } = require("../helpers");
 const { HttpError } = require("../helpers");
 
 const getAll = async (req, res) => {
-  const result = await Contact.find({}, "-createdAt -updatedAt");
+  const { _id: owner } = req.user;
+  const result = await Contact.find({owner}, "-createdAt -updatedAt");
   res.json(result);
 };
 
@@ -20,7 +21,9 @@ const getById = async (req, res) => {
 };
 
 const add = async (req, res) => {
-  const result = await Contact.create(req.body);
+  const { _id: owner } = req.user;
+  console.log(req.user);
+  const result = await Contact.create({...req.body, owner});
   res.status(201).json(result);
 };
 
